@@ -1,0 +1,2 @@
+# SIMPATICO
+Implementação do SIMPATICO
