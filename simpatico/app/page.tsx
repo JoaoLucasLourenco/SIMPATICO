@@ -1,5 +1,15 @@
-import Image from "next/image";
+import { Header } from "@/components/Header/Header";
+import { Button } from "@mui/material";
+import Link from "next/link";
 
 export default function Home() {
-  return <h1>Hello World!</h1>;
+  return (
+    <>
+      <Header>
+        <Button variant="outlined" color="primary">
+          Entrar
+        </Button>
+      </Header>
+    </>
+  );
 }
