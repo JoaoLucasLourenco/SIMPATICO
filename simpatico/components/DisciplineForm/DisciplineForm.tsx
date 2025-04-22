@@ -30,7 +30,7 @@ export const DisciplineForm = () => {
   return (
     <>
       <Grid container spacing={2} justifyContent={"center"} pt={15}>
-        <Grid sx={{ md: 7, sm: 11 }}>
+        <Grid sx={{ md: 7, sm: 11 }} textAlign={"center"} padding={1}>
           <Typography
             color="text.primary"
             variant={"h4"}
