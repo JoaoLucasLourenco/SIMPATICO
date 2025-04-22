@@ -49,7 +49,7 @@ export const DisciplineForm = () => {
           </Typography>
         </Grid>
 
-        <Grid size={{ md: 7, sm: 11 }} textAlign={"center"}>
+        <Grid size={11} textAlign={"center"}>
           <FormControl fullWidth>
             <Autocomplete
               sx={{ borderRadius: 999, mt: 5 }}
