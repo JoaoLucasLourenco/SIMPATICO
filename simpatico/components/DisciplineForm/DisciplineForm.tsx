@@ -30,7 +30,7 @@ export const DisciplineForm = () => {
   return (
     <>
       <Grid container spacing={2} justifyContent={"center"} pt={15}>
-        <Grid item md={7} sm={11} textAlign={"center"} padding={1}>
+        <Grid sx={{ md: 7, sm: 11 }}>
           <Typography
             color="text.primary"
             variant={"h4"}
@@ -49,7 +49,7 @@ export const DisciplineForm = () => {
           </Typography>
         </Grid>
 
-        <Grid item size={{ md: 7, sm: 11 }} textAlign={"center"}>
+        <Grid size={{ md: 7, sm: 11 }} textAlign={"center"}>
           <FormControl fullWidth>
             <Autocomplete
               sx={{ borderRadius: 999 }}
@@ -83,7 +83,6 @@ export const DisciplineForm = () => {
                   }
                 />
               )}
-              sx={{ mt: 2 }}
             />
 
             <Button
@@ -93,7 +92,7 @@ export const DisciplineForm = () => {
               sx={{ margin: 4, borderRadius: 999 }}
               disabled={!cursoSelecionado || !disciplinaSelecionada}
               onClick={() => {
-                router.push("/selecionar_disciplina");
+                router.push("/chat_simpatico");
               }}
             >
               Iniciar Chat

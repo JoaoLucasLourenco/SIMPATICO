@@ -1,7 +1,7 @@
 import { DisciplineForm } from "@/components/DisciplineForm/DisciplineForm";
 import { Header } from "@/components/Header/Header";
 import { Avatar, Link } from "@mui/material";
-export default function Home() {
+export default function SelecionarDisciplina() {
   return (
     <>
       <Header>
