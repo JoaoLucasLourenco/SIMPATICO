@@ -1,0 +1,16 @@
+import { Header } from "@/components/Header/Header";
+import { Avatar, Link } from "@mui/material";
+export default function Home() {
+  return (
+    <>
+      <Header>
+        <Link href="#" color="primary.main" underline="none">
+          Voltar
+        </Link>
+        <Link href="#">
+          <Avatar sx={{ bgcolor: "primary.main" }} />
+        </Link>
+      </Header>
+    </>
+  );
+}
