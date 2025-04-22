@@ -52,7 +52,7 @@ export const DisciplineForm = () => {
         <Grid size={{ md: 7, sm: 11 }} textAlign={"center"}>
           <FormControl fullWidth>
             <Autocomplete
-              sx={{ borderRadius: 999 }}
+              sx={{ borderRadius: 999, mt: 5 }}
               fullWidth
               disablePortal
               options={nomesDosCursos}
@@ -65,7 +65,7 @@ export const DisciplineForm = () => {
             />
 
             <Autocomplete
-              sx={{ borderRadius: 999 }}
+              sx={{ borderRadius: 999, mt: 5 }}
               fullWidth
               disablePortal
               disabled={!cursoSelecionado}
