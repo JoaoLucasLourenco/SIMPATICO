@@ -1,6 +1,7 @@
 "use client";
 
 import { Grid, Typography } from "@mui/material";
+import Link from "next/link";
 
 export const Header = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,23 +14,25 @@ export const Header = ({ children }: { children: React.ReactNode }) => {
         p={2}
         container
       >
-        <Typography
-          display={"flex"}
-          fontWeight={"bold"}
-          variant="h5"
-          component={"h1"}
-          color="text.primary"
-        >
-          Simpatico{" "}
+        <Link href={"/"}>
           <Typography
-            color="primary"
+            display={"flex"}
             fontWeight={"bold"}
             variant="h5"
             component={"h1"}
+            color="text.primary"
           >
-            AI
+            Simpatico{" "}
+            <Typography
+              color="primary"
+              fontWeight={"bold"}
+              variant="h5"
+              component={"h1"}
+            >
+              AI
+            </Typography>
           </Typography>
-        </Typography>
+        </Link>
         <Grid
           display={"flex"}
           gap={3}
