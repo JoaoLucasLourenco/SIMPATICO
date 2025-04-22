@@ -1,6 +1,7 @@
 import ThemeRegistry from "@/components/ThemeResistry/ThemeResistry";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { CourseProvider } from "@/lib/context/useCourse";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeRegistry>
+          <CourseProvider>{children}</CourseProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import { ChatInput } from "@/components/ChatInput/ChatInput";
+import { Chat } from "@/components/Chats/Chat";
 import { Header } from "@/components/Header/Header";
 import { Avatar, Button, Link } from "@mui/material";
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
           <Avatar sx={{ bgcolor: "primary.main" }} />
         </Link>
       </Header>
+      <Chat />
       <ChatInput />
     </>
   );
