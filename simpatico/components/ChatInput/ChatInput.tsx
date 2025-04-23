@@ -1,13 +1,66 @@
 "use client";
-
-import { FormControl, Grid, IconButton, TextField } from "@mui/material";
+import { useChat } from "@ai-sdk/react";
+import {
+  FormControl,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-
+import ReactMarkdown from "react-markdown";
 export const ChatInput = () => {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
   return (
     <Grid spacing={2} container alignSelf={"center"} justifyContent={"center"}>
+      <Grid
+        id={"mensagens"}
+        container
+        size={{ lg: 8, md: 8, sm: 11, xs: 11 }}
+        sx={{ overflowY: "auto" }}
+        flexDirection={"column"}
+      >
+        {messages.map((message) => (
+          <Grid
+            textAlign={message.role === "user" ? "right" : "left"}
+            key={message.id}
+            className="whitespace-pre-wrap"
+          >
+            {message.parts.map((part, i) => {
+              switch (part.type) {
+                case "text":
+                  return (
+                    <Grid
+                      sx={{ borderRadius: 2 }}
+                      p={2}
+                      bgcolor={
+                        message.role === "user"
+                          ? "background.paper"
+                          : "background.primary"
+                      }
+                    >
+                      <ReactMarkdown
+                        key={`${message.id}-${i}`}
+                        children={part.text}
+                      ></ReactMarkdown>
+                      <Typography component={"p"} color="text.secondary">
+                        {message.role === "user"
+                          ? message.createdAt?.toLocaleTimeString("pt-BR", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: false, // usa formato 24h (sem AM/PM)
+                            })
+                          : ""}
+                      </Typography>
+                    </Grid>
+                  );
+              }
+            })}
+          </Grid>
+        ))}
+      </Grid>
       <Grid size={{ lg: 8, md: 8, sm: 11, xs: 11 }}>
-        <form noValidate autoComplete="off">
+        <form onSubmit={handleSubmit}>
           <FormControl
             sx={{
               bgcolor: "background.paper",
@@ -25,11 +78,11 @@ export const ChatInput = () => {
             <TextField
               fullWidth
               variant="standard"
-              multiline={true}
+              value={input}
               InputProps={{
                 disableUnderline: true,
-                hiddenLabel: true,
               }}
+              onChange={handleInputChange}
               placeholder="Pergunte ao Simpatico"
               sx={{
                 "& .MuiInputBase-root": {
@@ -44,7 +97,7 @@ export const ChatInput = () => {
                 },
               }}
             />
-            <IconButton color={"primary"}>
+            <IconButton type="submit" color={"primary"}>
               <NavigateNextIcon color="primary" />
             </IconButton>
           </FormControl>

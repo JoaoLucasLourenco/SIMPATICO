@@ -5,7 +5,13 @@ import Link from "next/link";
 
 export const Header = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Grid spacing={2} container display={"flex"} justifyContent={"center"}>
+    <Grid
+      sx={{ bgColor: "background.default" }}
+      spacing={2}
+      container
+      display={"flex"}
+      justifyContent={"center"}
+    >
       <Grid
         size={10}
         display={"flex"}
