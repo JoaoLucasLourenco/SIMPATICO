@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import ReactMarkdown from "react-markdown";
 export const ChatInput = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   return (
@@ -18,13 +17,15 @@ export const ChatInput = () => {
         container
         size={{ lg: 8, md: 8, sm: 11, xs: 11 }}
         sx={{ overflowY: "auto" }}
-        flexDirection={"column"}
+        style={{ height: "50vh" }}
       >
         {messages.map((message) => (
           <Grid
             textAlign={message.role === "user" ? "right" : "left"}
             key={message.id}
             className="whitespace-pre-wrap"
+            wrap="wrap"
+            width={"100%"}
           >
             {message.parts.map((part, i) => {
               switch (part.type) {
@@ -39,10 +40,7 @@ export const ChatInput = () => {
                           : "background.primary"
                       }
                     >
-                      <ReactMarkdown
-                        key={`${message.id}-${i}`}
-                        children={part.text}
-                      ></ReactMarkdown>
+                      <p key={`${message.id}-${i}`}>{part.text}</p>
                       <Typography component={"p"} color="text.secondary">
                         {message.role === "user"
                           ? message.createdAt?.toLocaleTimeString("pt-BR", {
