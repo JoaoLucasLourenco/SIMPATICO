@@ -8,12 +8,11 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useCourse } from "@/lib/context/useCourse";
 import { v4 as uuidv4 } from "uuid";
-import { usePersistedState } from "@/lib/hooks/usePersistentState";
 
 const API_URL = process.env.NEXT_PUBLIC_POST_API_PATH as string;
 
 export const ChatInput = () => {
-  const [userId] = usePersistedState("userId", uuidv4());
+  const userId = uuidv4();
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<
