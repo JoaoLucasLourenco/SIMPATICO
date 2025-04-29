@@ -1,5 +1,5 @@
 interface IChatInputData {
-  id: number;
+  id: string;
   nome: string;
   curso: string | null;
   materia: string | null;
