@@ -19,9 +19,12 @@
     "next": "15.3.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "remarkable": "^2.0.1",
     "styled-components": "^6.1.17",
     "typescript": "5.8.3",
+    "uuid": "^11.1.0",
     "zod": "^3.24.3"
   },
   "devDependencies": {

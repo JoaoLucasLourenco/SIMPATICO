@@ -1,59 +1,92 @@
 "use client";
-import { useChat } from "@ai-sdk/react";
-import {
-  FormControl,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
+
+import { FormControl, Grid, IconButton, TextField } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useEffect, useRef, useState } from "react";
+import IChatInputData from "@/types/ChatInputData";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { useCourse } from "@/lib/context/useCourse";
+
+const API_URL = process.env.NEXT_PUBLIC_POST_API_PATH as string;
+
 export const ChatInput = () => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<
+    { text: string; role: "user" | "assistant" }[]
+  >([]);
+  const userId = 1;
+  const userName = "joao";
+  const { selectedCourse, selectedDiscipline } = useCourse();
+
+  const messagesRef = useRef<HTMLDivElement>(null);
+
+  const sendMessage = async (messageText: string) => {
+    const payload: IChatInputData = {
+      id: userId,
+      nome: userName,
+      curso: selectedCourse,
+      materia: selectedDiscipline,
+      mensagem_usuario: messageText,
+    };
+    if (!(messageText === "First message")) {
+      setMessages((prev) => [...prev, { role: "user", text: messageText }]);
+    }
+
+    setInput("");
+    try {
+      const response = await fetch(API_URL!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.text();
+      const respostaIA = data;
+      setMessages((prev) => [...prev, { role: "assistant", text: respostaIA }]);
+    } catch (error) {}
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    await sendMessage(input);
+  };
+
+  useEffect(() => {
+    messagesRef.current?.scrollTo({
+      top: messagesRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
+
   return (
-    <Grid spacing={2} container alignSelf={"center"} justifyContent={"center"}>
+    <Grid spacing={2} container alignSelf="center" justifyContent="center">
       <Grid
-        id={"mensagens"}
+        id="mensagens"
         container
+        ref={messagesRef}
+        sx={{ overflowY: "auto", height: "50vh", p: 2 }}
         size={{ lg: 8, md: 8, sm: 11, xs: 11 }}
-        sx={{ overflowY: "auto" }}
-        style={{ height: "50vh" }}
+        maxWidth={"100%"}
       >
-        {messages.map((message) => (
+        {messages.map((msg, index) => (
           <Grid
-            textAlign={message.role === "user" ? "right" : "left"}
-            key={message.id}
-            className="whitespace-pre-wrap"
-            wrap="wrap"
-            width={"100%"}
+            key={index}
+            textAlign={msg.role === "user" ? "right" : "left"}
+            width="100%"
           >
-            {message.parts.map((part, i) => {
-              switch (part.type) {
-                case "text":
-                  return (
-                    <Grid
-                      sx={{ borderRadius: 2 }}
-                      p={2}
-                      bgcolor={
-                        message.role === "user"
-                          ? "background.paper"
-                          : "background.primary"
-                      }
-                    >
-                      <p key={`${message.id}-${i}`}>{part.text}</p>
-                      <Typography component={"p"} color="text.secondary">
-                        {message.role === "user"
-                          ? message.createdAt?.toLocaleTimeString("pt-BR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              hour12: false, // usa formato 24h (sem AM/PM)
-                            })
-                          : ""}
-                      </Typography>
-                    </Grid>
-                  );
+            <Grid
+              sx={{ borderRadius: 2 }}
+              p={2}
+              bgcolor={
+                msg.role === "user" ? "background.paper" : "background.primary"
               }
-            })}
+            >
+              <Markdown remarkPlugins={[remarkGfm]}>{msg.text}</Markdown>
+            </Grid>
           </Grid>
         ))}
       </Grid>
@@ -77,25 +110,19 @@ export const ChatInput = () => {
               fullWidth
               variant="standard"
               value={input}
-              InputProps={{
-                disableUnderline: true,
-              }}
-              onChange={handleInputChange}
+              InputProps={{ disableUnderline: true }}
+              onChange={(e) => setInput(e.target.value)}
               placeholder="Pergunte ao Simpatico"
               sx={{
                 "& .MuiInputBase-root": {
                   backgroundColor: "transparent",
                   padding: 0,
                 },
-                "& .MuiInputLabel-root": {
-                  color: "gray", // ou 'text.secondary'
-                },
-                "& .Mui-focused": {
-                  color: "gray",
-                },
+                "& .MuiInputLabel-root": { color: "text.secondary" },
+                "& .Mui-focused": { color: "text.secondary" },
               }}
             />
-            <IconButton type="submit" color={"primary"}>
+            <IconButton type="submit" color="primary">
               <NavigateNextIcon color="primary" />
             </IconButton>
           </FormControl>
