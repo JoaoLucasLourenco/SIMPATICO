@@ -5,7 +5,7 @@ const Cursos = [
   },
   {
     nome: "Medicina",
-    disciplinas: ["Biologia Celular 1", "Fisiologia 1", "Anatomia 1"],
+    disciplinas: ["Biologia Celular I", "Fisiologia I", "Anatomia I"],
   },
   {
     nome: "Arquitetura e Urbanismo",

@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useCourse } from "@/lib/context/useCourse";
 import { v4 as uuidv4 } from "uuid";
+import { redirect } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_POST_API_PATH as string;
 
@@ -20,7 +21,9 @@ export const ChatInput = () => {
   >([]);
   const userName = "joao";
   const { selectedCourse, selectedDiscipline } = useCourse();
-
+  if (!(selectedCourse || selectedDiscipline)) {
+    redirect("/selecionar_disciplina");
+  }
   const messagesRef = useRef<HTMLDivElement>(null);
 
   const [firstMessageSent, setFirstMessageSent] = useState(false);
